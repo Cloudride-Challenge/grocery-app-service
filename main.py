@@ -1,9 +1,8 @@
+from contextlib import asynccontextmanager
 from fastapi import FastAPI, Form
 from fastapi.responses import HTMLResponse
 from grocery_storage import GroceryStorage
 import os
-
-app = FastAPI()
 
 GROCERY_TABLE_NAME = "grocery_items"
 DB_HOST = os.getenv("DB_HOST", "localhost")
@@ -17,9 +16,12 @@ storage = GroceryStorage(table_name=GROCERY_TABLE_NAME,
                          db_user= DB_USER,
                          db_password= DB_PASSWORD)
 
-@app.on_event("startup")
-def startup_event():
+@asynccontextmanager
+async def lifespan(app: FastAPI):
     storage.init_db()
+    yield
+
+app = FastAPI(lifespan=lifespan)
 
 @app.get("/", response_class=HTMLResponse)
 def read_grocery_list():
