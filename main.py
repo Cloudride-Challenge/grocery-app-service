@@ -1,12 +1,21 @@
 from fastapi import FastAPI, Form
 from fastapi.responses import HTMLResponse
 from grocery_storage import GroceryStorage
+import os
 
 app = FastAPI()
 
 GROCERY_TABLE_NAME = "grocery_items"
+DB_HOST = os.getenv("DB_HOST", "localhost")
+DB_NAME = os.getenv("DB_NAME", "grocery_db")
+DB_USER = os.getenv("DB_USER", "grocery_user")
+DB_PASSWORD = os.getenv("DB_PASSWORD", "password")
 
-storage = GroceryStorage(table_name=GROCERY_TABLE_NAME)
+storage = GroceryStorage(table_name=GROCERY_TABLE_NAME,
+                         db_host= DB_HOST,
+                         db_name= DB_NAME,
+                         db_user= DB_USER,
+                         db_password= DB_PASSWORD)
 
 @app.on_event("startup")
 def startup_event():

@@ -1,13 +1,12 @@
-import os
 import psycopg2
 
 class GroceryStorage:
-    def __init__(self, table_name: str):
+    def __init__(self, table_name: str, db_host: str, db_name: str, db_user: str, db_password: str):
         self.table_name = table_name
-        self.db_host = os.getenv("DB_HOST", "localhost")
-        self.db_name = os.getenv("DB_NAME", "grocery_db")
-        self.db_user = os.getenv("DB_USER", "grocery_user")
-        self.db_password = os.getenv("DB_PASSWORD", "password")
+        self.db_host = db_host 
+        self.db_name = db_name
+        self.db_user = db_user
+        self.db_password = db_password
 
     def _get_connection(self):
         return psycopg2.connect(
