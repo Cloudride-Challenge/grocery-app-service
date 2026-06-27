@@ -44,7 +44,7 @@ jobs:
 
       - name: Download Active Task Definition from AWS
         run: |
-          aws ecs describe-task-definition --task-definition grocery-dev-service --query taskDefinition > task-definition.
+          aws ecs describe-task-definition --task-definition grocery-dev-service --query taskDefinition > task-definition.json
 
       - name: Update Container Image in Task Definition
         id: render-task-def
