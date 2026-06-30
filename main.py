@@ -37,7 +37,7 @@ def read_grocery_list():
         <body>
             <h1>My Grocery List</h1>
             <form action="/add" method="post">
-                <input type="text" name="item" placeholder="Enter item" required />
+                <input type="text" name="item" placeholder="Enter item:" required />
                 <button type="submit">Add</button>
             </form>
             <ul>{items_html}</ul>
